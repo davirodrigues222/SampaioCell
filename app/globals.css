@@ -135,6 +135,13 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Páginas com barra de ação fixa (produto, sacola): mais espaço no fim para ela não cobrir o rodapé */
+@media (width < 48rem) {
+  body:has([data-sticky-bar]) {
+    padding-bottom: calc(var(--bottom-nav) + 4.5rem);
+  }
+}
+
 /* Títulos sem quebrar palavra no meio e com linhas equilibradas */
 h1,
 h2,
@@ -219,15 +226,39 @@ textarea {
   }
 }
 
-/* Faz um carrossel "sangrar" até a borda da tela, alinhado ao container-page */
+/*
+ * Faz um carrossel "sangrar" até a borda da tela no celular, alinhado ao container-page.
+ * A partir do tablet não faz nada (lá o carrossel vira grade).
+ */
 @utility bleed-x {
-  margin-inline: -1rem;
-  padding-inline: 1rem;
-  scroll-padding-inline: 1rem;
+  @media (width < 48rem) {
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    scroll-padding-inline: 1rem;
+  }
+}
+
+/* Carrossel no celular que vira grade a partir do tablet (as colunas vêm de md:grid-cols-*) */
+@utility scroller-mobile {
+  @media (width < 48rem) {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    scroll-padding-inline: 1rem;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    & > * {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+    }
+  }
   @media (width >= 48rem) {
-    margin-inline: -1.5rem;
-    padding-inline: 1.5rem;
-    scroll-padding-inline: 1.5rem;
+    display: grid;
   }
 }
 

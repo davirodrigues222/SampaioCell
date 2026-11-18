@@ -11,15 +11,18 @@ export function ProductVisual({
   image,
   icon,
   size = "card",
+  className = "",
 }: {
   name: string;
   image?: string;
   icon: CategoryIcon;
   size?: "card" | "large";
+  /** classes extras do contêiner (ex.: tirar as bordas arredondadas na foto em largura total do celular) */
+  className?: string;
 }) {
   if (image) {
     return (
-      <div className="relative aspect-square overflow-hidden rounded-2xl bg-card">
+      <div className={`relative aspect-square overflow-hidden rounded-2xl bg-card ${className}`}>
         <Image
           src={image}
           alt={name}
@@ -33,16 +36,16 @@ export function ProductVisual({
 
   return (
     <div
-      className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-line bg-card glow-tile"
+      className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-line bg-card glow-tile ${className}`}
       role="img"
       aria-label={name}
     >
       <CategoryIconView
         icon={icon}
         strokeWidth={1.25}
-        className={size === "large" ? "size-32 text-text/80" : "size-16 text-text/80"}
+        className={size === "large" ? "size-28 text-text/80 md:size-32" : "size-14 text-text/80 sm:size-16"}
       />
-      <span className="absolute bottom-3 left-3 rounded-full bg-surface/85 px-2.5 py-1 text-[10px] font-medium tracking-wide text-muted uppercase">
+      <span className="absolute bottom-2 left-2 rounded-full bg-surface/85 px-2 py-0.5 text-[11px] font-medium text-muted sm:bottom-3 sm:left-3 sm:px-2.5 sm:py-1">
         Foto em breve
       </span>
     </div>

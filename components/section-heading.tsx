@@ -13,7 +13,7 @@ export function SectionHeading({
   action?: { href: string; label: string };
 }) {
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
       <div className="max-w-2xl">
         {eyebrow && (
           <p className="text-xs font-bold tracking-[0.2em] text-accent uppercase">{eyebrow}</p>
@@ -24,7 +24,7 @@ export function SectionHeading({
       {action && (
         <Link
           href={action.href}
-          className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-accent hover:underline"
+          className="-my-2 inline-flex min-h-11 shrink-0 items-center gap-1.5 self-start text-sm font-semibold text-accent hover:underline active:opacity-70 sm:self-auto"
         >
           {action.label}
           <ArrowRight className="size-4" aria-hidden />

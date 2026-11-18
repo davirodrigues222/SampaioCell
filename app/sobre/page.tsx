@@ -62,8 +62,8 @@ export default function AboutPage() {
         crumbs={[{ href: "/", label: "Início" }, { label: "Sobre" }]}
       />
 
-      <section className="container-page grid gap-12 pt-14 lg:grid-cols-2 lg:items-center">
-        <div className="space-y-5 text-lg leading-relaxed text-muted">
+      <section className="container-page grid gap-8 pt-8 md:gap-12 md:pt-14 lg:grid-cols-2 lg:items-center">
+        <div className="space-y-4 leading-relaxed text-muted md:space-y-5 md:text-lg">
           <p className="font-display text-2xl leading-snug font-extrabold text-text italic sm:text-3xl">
             Começamos como um pequeno armarinho. Hoje cuidamos do seu celular, do acessório ao conserto.
           </p>
@@ -84,14 +84,14 @@ export default function AboutPage() {
             src="/images/fachada-loja.webp"
             alt="Fachada da Sampaio Cell na Rua Itarema, com a loja aberta e duas pessoas sentadas na entrada"
             fill
-            priority
+            preload
             sizes="(min-width: 1024px) 45vw, 90vw"
             className="object-cover"
           />
         </div>
       </section>
 
-      <section className="container-page pt-20">
+      <section className="container-page pt-14 md:pt-20">
         <SectionHeading
           eyebrow="Por dentro"
           title="Conheça a loja"
@@ -117,11 +117,11 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section className="container-page pt-20">
+      <section className="container-page pt-14 md:pt-20">
         <SectionHeading eyebrow="Nosso jeito" title="O que nos diferencia" />
-        <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-5 grid grid-cols-2 gap-2.5 md:mt-8 md:gap-3 lg:grid-cols-4">
           {values.map(({ icon: Icon, title, text }) => (
-            <li key={title} className="rounded-2xl border border-line bg-card p-6">
+            <li key={title} className="rounded-2xl border border-line bg-card p-4 md:p-6">
               <Icon className="size-7 text-accent" aria-hidden />
               <h3 className="mt-4 font-semibold">{title}</h3>
               <p className="mt-1 text-sm text-muted">{text}</p>
@@ -130,7 +130,7 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section className="container-page pt-20">
+      <section className="container-page pt-14 md:pt-20">
         <SectionHeading eyebrow="Visite" title="Onde estamos" />
         <div className="mt-8">
           <StoreLocation />

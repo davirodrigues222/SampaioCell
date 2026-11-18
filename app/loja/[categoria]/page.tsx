@@ -29,7 +29,7 @@ async function CategoryContent({ params }: { params: PageProps<"/loja/[categoria
         description={category.description}
         crumbs={[{ href: "/", label: "Início" }, { href: "/loja", label: "Loja" }, { label: category.name }]}
       />
-      <div className="container-page py-10">
+      <div className="container-page pt-5 pb-10 md:py-10">
         <ProductBrowser
           products={getProductsByCategory(category.slug)}
           categories={categories}

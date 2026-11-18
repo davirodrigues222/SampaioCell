@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ExternalLink, Phone } from "lucide-react";
+import { ChevronRight, ExternalLink, Phone } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/icons";
 import { PageHeader } from "@/components/page-header";
 import { StoreLocation } from "@/components/store-location";
@@ -54,28 +54,29 @@ export default function ContactPage() {
         description="Fale com a gente pelo canal que preferir ou venha até a loja."
         crumbs={[{ href: "/", label: "Início" }, { label: "Contato" }]}
       />
-      <section className="container-page pt-14">
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="container-page pt-6 md:pt-14">
+        <ul className="grid gap-2.5 sm:grid-cols-2 md:gap-3 lg:grid-cols-4">
           {channels.map((c) => (
             <li key={c.title}>
               <a
                 href={c.href}
                 target={c.href.startsWith("tel:") ? undefined : "_blank"}
                 rel="noopener noreferrer"
-                className="flex h-full flex-col gap-4 rounded-2xl border border-line bg-card p-6 transition hover:-translate-y-0.5 hover:border-text/25"
+                className="pressable flex h-full items-center gap-4 rounded-2xl border border-line bg-card p-4 hover:border-text/25 active:border-text/25 md:flex-col md:items-start md:p-6 md:hover:-translate-y-0.5"
               >
-                <span className={`flex size-12 items-center justify-center rounded-xl ${c.color}`}>{c.icon}</span>
-                <span>
+                <span className={`flex size-12 shrink-0 items-center justify-center rounded-xl ${c.color}`}>{c.icon}</span>
+                <span className="min-w-0 flex-1">
                   <span className="block text-sm text-muted">{c.title}</span>
                   <span className="block text-lg font-semibold">{c.text}</span>
-                  <span className="mt-1 block text-xs text-muted">{c.hint}</span>
+                  <span className="mt-0.5 block text-xs text-muted md:mt-1">{c.hint}</span>
                 </span>
+                <ChevronRight className="size-5 shrink-0 text-muted md:hidden" aria-hidden />
               </a>
             </li>
           ))}
         </ul>
       </section>
-      <section className="container-page pt-10">
+      <section className="container-page pt-8 md:pt-10">
         <StoreLocation />
       </section>
     </>

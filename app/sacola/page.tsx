@@ -11,7 +11,7 @@ export default function CartPage() {
   return (
     <>
       <PageHeader title="Sua sacola" crumbs={[{ href: "/", label: "Início" }, { label: "Sacola" }]} />
-      <div className="container-page py-10">
+      <div className="container-page pt-5 pb-10 md:py-10">
         <CartView />
       </div>
     </>

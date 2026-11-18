@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Send } from "lucide-react";
 import { whatsappUrl } from "@/lib/whatsapp";
+import { FieldError } from "./field-error";
+import { useFieldErrors } from "./use-field-errors";
 
 const deviceTypes = ["Celular", "Tablet"];
 const brands = ["Apple (iPhone/iPad)", "Samsung", "Motorola", "Xiaomi / Redmi / Poco", "Realme", "LG", "Outra"];
@@ -18,6 +20,13 @@ const problems = [
   "Outro",
 ];
 
+const messages = {
+  nome: "Informe seu nome.",
+  marca: "Escolha a marca do aparelho.",
+  modelo: "Informe o modelo do aparelho.",
+  problema: "Escolha o problema.",
+};
+
 /**
  * Formulário de orçamento.
  * Fase 1: envia a solicitação pelo WhatsApp.
@@ -25,9 +34,11 @@ const problems = [
  */
 export function QuoteForm() {
   const [sent, setSent] = useState(false);
+  const { errors, validate, fieldProps } = useFieldErrors(messages);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!validate(e.currentTarget)) return;
     const data = new FormData(e.currentTarget);
     const get = (k: string) => String(data.get(k) ?? "").trim();
     const message = [
@@ -45,26 +56,37 @@ export function QuoteForm() {
     setSent(true);
   }
 
-  const field =
-    "mt-2 h-11 w-full rounded-xl border border-line bg-surface px-4 text-text focus:border-brand-orange focus:outline-none";
+  const field = (name: string) =>
+    `mt-2 h-12 w-full rounded-xl border bg-surface px-4 text-text focus:border-brand-orange focus:outline-none ${
+      errors[name] ? "border-red-500" : "border-line"
+    }`;
+  const label = "text-sm font-semibold";
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-4 sm:grid-cols-2">
+    <form onSubmit={handleSubmit} noValidate className="grid gap-4 sm:grid-cols-2">
       <label className="block">
-        <span className="text-sm font-semibold">Seu nome</span>
-        <input name="nome" required autoComplete="name" className={field} />
+        <span className={label}>Seu nome</span>
+        <input
+          {...fieldProps("nome")}
+          required
+          autoComplete="name"
+          autoCapitalize="words"
+          enterKeyHint="next"
+          className={field("nome")}
+        />
+        <FieldError name="nome" message={errors.nome} />
       </label>
       <label className="block">
-        <span className="text-sm font-semibold">Tipo de aparelho</span>
-        <select name="tipo" className={field} defaultValue="Celular">
+        <span className={label}>Tipo de aparelho</span>
+        <select name="tipo" className={field("tipo")} defaultValue="Celular">
           {deviceTypes.map((t) => (
             <option key={t}>{t}</option>
           ))}
         </select>
       </label>
       <label className="block">
-        <span className="text-sm font-semibold">Marca</span>
-        <select name="marca" required className={field} defaultValue="">
+        <span className={label}>Marca</span>
+        <select {...fieldProps("marca")} required className={field("marca")} defaultValue="">
           <option value="" disabled>
             Selecione…
           </option>
@@ -72,14 +94,28 @@ export function QuoteForm() {
             <option key={b}>{b}</option>
           ))}
         </select>
+        <FieldError name="marca" message={errors.marca} />
       </label>
       <label className="block">
-        <span className="text-sm font-semibold">Modelo</span>
-        <input name="modelo" required placeholder="Ex.: iPhone 11, Galaxy A32…" className={field} />
+        <span className={label}>Modelo</span>
+        <input
+          {...fieldProps("modelo")}
+          required
+          placeholder="Ex.: iPhone 11, Galaxy A32…"
+          autoComplete="off"
+          enterKeyHint="next"
+          className={field("modelo")}
+        />
+        <FieldError name="modelo" message={errors.modelo} />
       </label>
       <label className="block sm:col-span-2">
-        <span className="text-sm font-semibold">Qual o problema?</span>
-        <select name="problema" required className={field} defaultValue="">
+        <span className={label}>Qual o problema?</span>
+        <select
+          {...fieldProps("problema")}
+          required
+          className={field("problema")}
+          defaultValue=""
+        >
           <option value="" disabled>
             Selecione…
           </option>
@@ -87,9 +123,10 @@ export function QuoteForm() {
             <option key={p}>{p}</option>
           ))}
         </select>
+        <FieldError name="problema" message={errors.problema} />
       </label>
       <label className="block sm:col-span-2">
-        <span className="text-sm font-semibold">
+        <span className={label}>
           Detalhes <span className="font-normal text-muted">(opcional)</span>
         </span>
         <textarea
@@ -102,9 +139,9 @@ export function QuoteForm() {
       <div className="sm:col-span-2">
         <button
           type="submit"
-          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-orange px-8 font-semibold text-black hover:bg-brand-orange-strong sm:w-auto"
+          className="pressable inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-orange px-6 py-2 font-semibold text-black hover:bg-brand-orange-strong active:bg-brand-orange-strong sm:w-auto sm:px-8"
         >
-          <Send className="size-4" aria-hidden />
+          <Send className="size-4 shrink-0" aria-hidden />
           Enviar pedido de orçamento
         </button>
         <p className="mt-3 text-xs text-muted" aria-live="polite">

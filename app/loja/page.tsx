@@ -16,7 +16,7 @@ export default function StorePage() {
         description="Acessórios para celular, eletrônicos e variedades — os mesmos produtos que você encontra na nossa loja física."
         crumbs={[{ href: "/", label: "Início" }, { label: "Loja" }]}
       />
-      <div className="container-page py-10">
+      <div className="container-page pt-5 pb-10 md:py-10">
         <ProductBrowser products={products} categories={categories} />
       </div>
     </>

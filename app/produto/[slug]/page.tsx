@@ -3,10 +3,10 @@ import { ProductSkeleton } from "@/components/skeletons";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CreditCard, MapPin, Store, Truck } from "lucide-react";
+import { ChevronRight, CreditCard, MapPin, Store, Truck } from "lucide-react";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { StickyBuyBar } from "@/components/cart/sticky-buy-bar";
 import { WhatsAppIcon } from "@/components/icons";
-import { PageHeader } from "@/components/page-header";
 import { ProductCard } from "@/components/product-card";
 import { ProductVisual } from "@/components/product-visual";
 import { getCategory, getProduct, getRelatedProducts, products } from "@/lib/catalog";
@@ -35,30 +35,55 @@ async function ProductContent({ params }: { params: PageProps<"/produto/[slug]">
 
   return (
     <>
-      <PageHeader
-        title={product.name}
-        crumbs={[
-          { href: "/", label: "Início" },
-          { href: "/loja", label: "Loja" },
-          ...(category ? [{ href: `/loja/${category.slug}`, label: category.name }] : []),
-          { label: product.name },
-        ]}
-      />
+      <nav aria-label="Você está em" className="container-page pt-3 md:pt-6">
+        <ol className="flex items-center gap-x-1 overflow-hidden text-xs whitespace-nowrap text-muted">
+          {[
+            { href: "/", label: "Início" },
+            { href: "/loja", label: "Loja" },
+            ...(category ? [{ href: `/loja/${category.slug}`, label: category.name }] : []),
+          ].map((c) => (
+            <li key={c.href} className="flex shrink-0 items-center gap-1">
+              <Link href={c.href} className="inline-flex min-h-11 items-center px-0.5 hover:text-text active:text-text">
+                {c.label}
+              </Link>
+              <ChevronRight className="size-3.5" aria-hidden />
+            </li>
+          ))}
+          <li aria-current="page" className="min-w-0 truncate text-text">
+            {product.name}
+          </li>
+        </ol>
+      </nav>
 
-      <div className="container-page grid gap-10 py-10 lg:grid-cols-2 lg:gap-16">
-        <ProductVisual name={product.name} image={product.image} icon={category?.icon ?? "phone"} size="large" />
+      <div className="container-page grid gap-5 pb-10 md:gap-10 md:pt-4 lg:grid-cols-2 lg:gap-16">
+        {/* no celular a foto ocupa a largura toda da tela */}
+        <div className="-mx-4 md:mx-0">
+          <ProductVisual
+            name={product.name}
+            image={product.image}
+            icon={category?.icon ?? "phone"}
+            size="large"
+            className="rounded-none border-x-0 md:rounded-2xl md:border-x"
+          />
+        </div>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-5 md:gap-6">
           <div>
             {category && (
-              <Link href={`/loja/${category.slug}`} className="text-sm font-medium text-accent-2 hover:underline">
+              <Link
+                href={`/loja/${category.slug}`}
+                className="-my-2 inline-flex min-h-11 items-center text-sm font-medium text-accent-2 hover:underline"
+              >
                 {category.name}
               </Link>
             )}
-            <div className="mt-3 flex flex-wrap items-baseline gap-3">
-              <p className="font-display text-4xl font-black">{formatPrice(product.price)}</p>
+            <h1 className="font-display text-2xl leading-tight font-extrabold tracking-tight italic md:text-4xl">
+              {product.name}
+            </h1>
+            <div className="mt-3 flex flex-wrap items-baseline gap-x-3">
+              <p className="font-display text-4xl font-black tabular-nums">{formatPrice(product.price)}</p>
               {product.compareAtPrice && (
-                <p className="text-lg text-muted line-through">{formatPrice(product.compareAtPrice)}</p>
+                <p className="text-lg text-muted tabular-nums line-through">{formatPrice(product.compareAtPrice)}</p>
               )}
             </div>
             <p className="mt-2 text-sm">
@@ -74,19 +99,21 @@ async function ProductContent({ params }: { params: PageProps<"/produto/[slug]">
 
           <p className="leading-relaxed text-muted">{product.description}</p>
 
-          <AddToCartButton product={product} variant="full" />
+          <div id="comprar">
+            <AddToCartButton product={product} variant="full" />
+          </div>
 
           <a
             href={whatsappUrl(`Olá! Tenho interesse no produto: ${product.name} (${formatPrice(product.price)}).`)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-[#25D366]/60 px-6 font-semibold text-[#25D366] hover:bg-[#25D366]/10"
+            className="pressable inline-flex h-12 items-center justify-center gap-2 rounded-full border border-[#1fa855]/60 px-6 font-semibold text-[#15803d] hover:bg-[#25D366]/10 active:bg-[#25D366]/15 dark:border-[#25D366]/60 dark:text-[#25D366]"
           >
             <WhatsAppIcon className="size-5" />
             Tirar dúvida no WhatsApp
           </a>
 
-          <ul className="grid gap-3 rounded-2xl border border-line bg-card p-5 text-sm">
+          <ul className="grid gap-3 rounded-2xl border border-line bg-card p-4 text-sm md:p-5">
             <li className="flex gap-3">
               <Store className="size-5 shrink-0 text-accent" aria-hidden />
               <span>
@@ -113,9 +140,9 @@ async function ProductContent({ params }: { params: PageProps<"/produto/[slug]">
       </div>
 
       {related.length > 0 && (
-        <section className="container-page pt-10">
+        <section className="container-page pt-4 md:pt-10">
           <h2 className="font-display text-2xl font-extrabold italic">Você também pode gostar</h2>
-          <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <ul className="mt-4 grid grid-cols-2 gap-2.5 sm:gap-4 md:mt-6 lg:grid-cols-4">
             {related.map((p) => (
               <li key={p.id} className="flex">
                 <ProductCard product={p} />
@@ -124,6 +151,8 @@ async function ProductContent({ params }: { params: PageProps<"/produto/[slug]">
           </ul>
         </section>
       )}
+
+      <StickyBuyBar product={product} targetId="comprar" />
     </>
   );
 }
