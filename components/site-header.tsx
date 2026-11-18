@@ -64,7 +64,9 @@ export function SiteHeader() {
           </nav>
 
           <div className="-mr-1.5 flex items-center gap-1">
-            <ThemeToggle className="hidden md:inline-flex" />
+            <div className="hidden md:block">
+              <ThemeToggle />
+            </div>
             <CartButton />
             <MobileMenu items={navItems} />
           </div>
