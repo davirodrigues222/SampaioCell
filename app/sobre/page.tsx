@@ -36,6 +36,21 @@ const gallery = [
     alt: "Técnico trocando peça de um iPhone",
     caption: "Reparo feito na própria loja",
   },
+  {
+    src: "/images/entrada-loja.webp",
+    alt: "Entrada da Sampaio Cell com o letreiro laranja e azul e o corredor de prateleiras ao fundo",
+    caption: "Pode entrar, a loja é sua",
+  },
+  {
+    src: "/images/interior-capinhas.webp",
+    alt: "Parede com dezenas de capinhas coloridas para iPhone, Samsung, Motorola e Xiaomi",
+    caption: "Capinhas para todos os modelos",
+  },
+  {
+    src: "/images/interior-audio.webp",
+    alt: "Estante com fones de ouvido, caixas de som e kits gamer, ao lado da parede de carregadores",
+    caption: "Fones, caixas de som e acessórios",
+  },
 ];
 
 export default function AboutPage() {

@@ -18,6 +18,12 @@ const highlights = [
   { icon: BadgeCheck, title: `${store.google.rating.toLocaleString("pt-BR")} no Google`, text: `${store.google.reviewCount} avaliações` },
 ];
 
+const storePhotos = [
+  { src: "/images/entrada-loja.webp", alt: "Entrada da Sampaio Cell com o letreiro e o corredor de prateleiras" },
+  { src: "/images/interior-capinhas.webp", alt: "Parede de capinhas coloridas para vários modelos de celular" },
+  { src: "/images/interior-audio.webp", alt: "Estante com fones de ouvido, caixas de som e kits gamer" },
+];
+
 export default function HomePage() {
   const featured = getFeaturedProducts().slice(0, 8);
 
@@ -201,7 +207,20 @@ export default function HomePage() {
           title="Loja física no Passaré"
           description="Passe na loja para ver de perto os produtos, deixar seu aparelho para conserto ou retirar seu pedido."
         />
-        <div className="mt-8">
+        <ul className="mt-8 grid grid-cols-3 gap-2 sm:gap-3">
+          {storePhotos.map((photo) => (
+            <li key={photo.src} className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-line sm:rounded-3xl">
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                sizes="(min-width: 1280px) 400px, 33vw"
+                className="object-cover"
+              />
+            </li>
+          ))}
+        </ul>
+        <div className="mt-3 sm:mt-4">
           <StoreLocation />
         </div>
       </section>
