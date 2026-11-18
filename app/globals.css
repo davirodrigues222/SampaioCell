@@ -42,6 +42,27 @@
   --text-title--line-height: 1.1;
   --text-heading: clamp(1.75rem, 1.4rem + 1.1vw, 2.25rem);
   --text-heading--line-height: 1.15;
+
+  /* Animações do menu lateral (desligadas com prefers-reduced-motion) */
+  --animate-drawer-in: drawer-in 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-in: fade-in 0.2s ease-out;
+
+  @keyframes drawer-in {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 :root,
