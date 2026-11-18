@@ -4,6 +4,7 @@ import { Handshake, ShieldCheck, Store, Wrench } from "lucide-react";
 import { GoogleRating } from "@/components/google-rating";
 import { PageHeader } from "@/components/page-header";
 import { SectionHeading } from "@/components/section-heading";
+import { StoreGallery, storePhotos } from "@/components/store-gallery";
 import { StoreLocation } from "@/components/store-location";
 import { store } from "@/lib/store-info";
 
@@ -19,39 +20,8 @@ const values = [
   { icon: Store, title: "Variedade", text: "Do acessório para o celular ao presente, de controle de TV a videogame retrô." },
 ];
 
-/** Fotos da galeria — para adicionar uma nova, basta colocar o arquivo em /public/images e incluir aqui. */
-const gallery = [
-  {
-    src: "/images/proprietarios-fachada.webp",
-    alt: "Casal em pé na entrada da Sampaio Cell, com as prateleiras de capinhas ao fundo",
-    caption: "A família na porta da loja",
-  },
-  {
-    src: "/images/tecnico-reparo-1.webp",
-    alt: "Técnico medindo a placa de um celular com multímetro",
-    caption: "Diagnóstico na bancada",
-  },
-  {
-    src: "/images/tecnico-reparo-2.webp",
-    alt: "Técnico trocando peça de um iPhone",
-    caption: "Reparo feito na própria loja",
-  },
-  {
-    src: "/images/entrada-loja.webp",
-    alt: "Entrada da Sampaio Cell com o letreiro laranja e azul e o corredor de prateleiras ao fundo",
-    caption: "Pode entrar, a loja é sua",
-  },
-  {
-    src: "/images/interior-capinhas.webp",
-    alt: "Parede com dezenas de capinhas coloridas para iPhone, Samsung, Motorola e Xiaomi",
-    caption: "Capinhas para todos os modelos",
-  },
-  {
-    src: "/images/interior-audio.webp",
-    alt: "Estante com fones de ouvido, caixas de som e kits gamer, ao lado da parede de carregadores",
-    caption: "Fones, caixas de som e acessórios",
-  },
-];
+const p = storePhotos;
+const gallery = [p.proprietarios, p.entrada, p.capinhas, p.audio, p.diagnostico, p.reparo];
 
 export default function AboutPage() {
   return (
@@ -91,30 +61,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="container-page pt-14 md:pt-20">
+      <section id="fotos" className="container-page scroll-mt-20 pt-14 md:scroll-mt-32 md:pt-20">
         <SectionHeading
           eyebrow="Por dentro"
           title="Conheça a loja"
-          description="Quem faz a Sampaio Cell acontecer todos os dias."
+          description="A loja por dentro e quem faz a Sampaio Cell acontecer todos os dias."
         />
-        <ul className="mt-8 grid gap-3 sm:grid-cols-3">
-          {gallery.map((photo) => (
-            <li key={photo.src}>
-              <figure className="overflow-hidden rounded-3xl border border-line bg-card">
-                <div className="relative aspect-[4/5]">
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    sizes="(min-width: 640px) 33vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <figcaption className="px-4 py-3 text-sm text-muted">{photo.caption}</figcaption>
-              </figure>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-5 md:mt-8">
+          <StoreGallery photos={gallery} label="Fotos da Sampaio Cell" />
+        </div>
       </section>
 
       <section className="container-page pt-14 md:pt-20">
