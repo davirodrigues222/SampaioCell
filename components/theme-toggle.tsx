@@ -1,7 +1,7 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
-import { THEME_STORAGE_KEY } from "@/lib/theme";
+import { applyThemeBarColor, THEME_STORAGE_KEY } from "@/lib/theme";
 
 /** Alterna entre tema claro (padrão) e escuro. Os ícones trocam via CSS, sem estado no React. */
 export function ThemeToggle() {
@@ -9,6 +9,7 @@ export function ThemeToggle() {
     const root = document.documentElement;
     const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
     root.setAttribute("data-theme", next);
+    applyThemeBarColor(next);
     try {
       localStorage.setItem(THEME_STORAGE_KEY, next);
     } catch {

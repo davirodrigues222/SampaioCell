@@ -33,7 +33,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f79a19",
+  width: "device-width",
+  initialScale: 1,
+  // ocupa a tela toda no iPhone (notch / barra inferior); as áreas seguras são tratadas no CSS
+  viewportFit: "cover",
+  // cor da barra do navegador = cor do cabeçalho; o script de tema troca para preto no modo escuro
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

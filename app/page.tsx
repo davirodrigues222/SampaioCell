@@ -38,7 +38,7 @@ export default function HomePage() {
         <div className="container-page relative grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-2">
           <div>
             <GoogleRating />
-            <h1 className="mt-5 font-display text-4xl leading-[1.05] font-black tracking-tight italic sm:text-5xl lg:text-6xl">
+            <h1 className="mt-5 font-display text-display font-black tracking-tight italic">
               Tudo para o seu celular, <span className="text-brand-blue">do acessório</span>{" "}
               <span className="text-[#e27600] dark:text-brand-orange">ao conserto.</span>
             </h1>
@@ -157,7 +157,7 @@ export default function HomePage() {
           <div className="relative grid gap-10 p-6 sm:p-10 lg:grid-cols-2 lg:p-14">
             <div>
               <p className="text-xs font-bold tracking-[0.2em] text-accent-2 uppercase">Assistência técnica</p>
-              <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight italic sm:text-4xl">
+              <h2 className="mt-2 font-display text-heading font-extrabold tracking-tight italic">
                 Celular quebrado? A gente resolve.
               </h2>
               <p className="mt-4 text-muted">

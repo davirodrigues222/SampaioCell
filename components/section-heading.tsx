@@ -18,7 +18,7 @@ export function SectionHeading({
         {eyebrow && (
           <p className="text-xs font-bold tracking-[0.2em] text-accent uppercase">{eyebrow}</p>
         )}
-        <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight italic sm:text-4xl">{title}</h2>
+        <h2 className="mt-2 font-display text-heading font-extrabold tracking-tight italic">{title}</h2>
         {description && <p className="mt-3 text-muted">{description}</p>}
       </div>
       {action && (

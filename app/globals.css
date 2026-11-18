@@ -30,6 +30,18 @@
 
   --font-sans: var(--font-inter);
   --font-display: var(--font-archivo);
+
+  /*
+   * Tipografia fluida: cresce com a largura da tela entre um mínimo (celular)
+   * e um máximo (desktop). Uso: text-display (título do hero), text-title
+   * (título das páginas) e text-heading (títulos de seção).
+   */
+  --text-display: clamp(2.25rem, 1.2rem + 3.6vw, 3.75rem);
+  --text-display--line-height: 1.05;
+  --text-title: clamp(1.875rem, 1.2rem + 2.6vw, 3rem);
+  --text-title--line-height: 1.1;
+  --text-heading: clamp(1.75rem, 1.4rem + 1.1vw, 2.25rem);
+  --text-heading--line-height: 1.15;
 }
 
 :root,
@@ -74,13 +86,62 @@
   --shadow: none;
 }
 
+/*
+ * Altura da barra de navegação inferior (só no celular). Elementos fixos no
+ * rodapé (barra de compra, botão do WhatsApp) usam esta variável para ficar
+ * acima dela. No tablet/desktop a barra não existe e o valor vira 0.
+ */
+:root {
+  --bottom-nav: calc(4rem + env(safe-area-inset-bottom));
+  @media (width >= 48rem) {
+    --bottom-nav: 0px;
+  }
+}
+
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
   background: var(--surface);
   color: var(--text);
+  /* Proteção extra contra rolagem lateral; a causa de cada estouro é corrigida no componente. */
+  overflow-x: clip;
+  /* espaço para a barra inferior no celular não cobrir o fim da página */
+  padding-bottom: var(--bottom-nav);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Títulos sem quebrar palavra no meio e com linhas equilibradas */
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+/* Campos com no mínimo 16px: abaixo disso o iPhone dá zoom ao tocar no campo */
+input,
+select,
+textarea {
+  font-size: max(1rem, 1em);
+}
+
+/* Movimento reduzido: sem animações, transições nem rolagem suave */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 ::selection {
@@ -94,13 +155,58 @@ body {
   outline-offset: 2px;
 }
 
+/* Largura e respiro lateral padrão: 16px no celular (ou a área segura do iPhone deitado), 24px no tablet, 32px no desktop */
 @utility container-page {
   width: 100%;
   max-width: 80rem;
   margin-inline: auto;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  @media (width >= 48rem) {
+    padding-left: max(1.5rem, env(safe-area-inset-left));
+    padding-right: max(1.5rem, env(safe-area-inset-right));
+  }
+  @media (width >= 64rem) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Feedback ao toque: o elemento "afunda" levemente ao ser pressionado (não depende de :hover) */
+@utility pressable {
+  transition-property: transform, background-color, border-color, color, opacity;
+  transition-duration: 150ms;
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Carrossel horizontal com encaixe (celular). Esconde a barra de rolagem, mantendo o gesto. */
+@utility scroller {
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  & > * {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+}
+
+/* Faz um carrossel "sangrar" até a borda da tela, alinhado ao container-page */
+@utility bleed-x {
+  margin-inline: -1rem;
   padding-inline: 1rem;
-  @media (width >= 40rem) {
+  scroll-padding-inline: 1rem;
+  @media (width >= 48rem) {
+    margin-inline: -1.5rem;
     padding-inline: 1.5rem;
+    scroll-padding-inline: 1.5rem;
   }
 }
 
