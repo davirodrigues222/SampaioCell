@@ -6,7 +6,7 @@ import { fullAddress, store } from "@/lib/store-info";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { InstagramIcon, WhatsAppIcon } from "./icons";
 
-const footerLink = "flex min-h-11 items-center hover:text-accent active:text-accent md:min-h-9";
+const footerLink = "flex min-h-11 items-center hover:text-accent active:text-accent lg:min-h-9";
 
 export function SiteFooter() {
   return (
@@ -72,7 +72,7 @@ export function SiteFooter() {
           <ul className="mt-4 space-y-3 text-sm text-muted">
             <li className="flex gap-2">
               <MapPin className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
-              <a href={store.google.mapsUrl} target="_blank" rel="noopener noreferrer" className="-my-1 inline-block py-1 hover:text-text active:text-text">
+              <a href={store.google.mapsUrl} target="_blank" rel="noopener noreferrer" className="-my-3 inline-block py-3 hover:text-text active:text-text">
                 {fullAddress}
               </a>
             </li>

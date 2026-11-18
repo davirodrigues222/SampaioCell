@@ -8,7 +8,7 @@ export function GoogleRating({ className = "" }: { className?: string }) {
       href={mapsUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center gap-2 text-sm hover:underline ${className}`}
+      className={`-my-3 inline-flex min-h-11 items-center gap-2 py-3 text-sm hover:underline active:opacity-70 ${className}`}
     >
       <span className="flex" aria-hidden>
         {[0, 1, 2, 3, 4].map((i) => (
